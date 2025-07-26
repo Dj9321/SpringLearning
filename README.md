@@ -16,3 +16,6 @@ Table structure and DDL script will be in resource folder.
 * Hostname: 172.17.0.2
 * Port: 5432
 * Username: postgres
+
+# Author
+Dheeraj S
