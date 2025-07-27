@@ -17,7 +17,7 @@ Table structure and DDL script will be in resource folder.
 * Port: 5432
 * Username: postgres
 
-#Swagger:
+# Swagger:
 Add openapi dependency and no configuration required for this. 
 Use url: http://localhost:8080/swagger-ui/index.html
 
