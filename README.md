@@ -4,6 +4,8 @@ Markdown syntax (e.g., # Title for headers, - or * for lists, etc.
 # Description
 This project contains Spring boot project.
 It connects with Postgres SQL.
+ * Needs Postgres Server to start.
+ * Just start the Postgres in Docker
 
 
 # Postgres SQL
