@@ -6,11 +6,15 @@ This project contains Spring boot project.
 It connects with Postgres SQL.
  * Needs Postgres Server to start.
  * Just start the Postgres in Docker
+ * Port changed to 9090 and has an index.html in static resources folder
 
+#Security
+Check in applicaiton.properties file
 
 # Postgres SQL
 * Start Via Docker: 
-In terminal: sudo docker ps -a
+In terminal: sudo docker ps -a // Check all containers
+sudo docker start dj-postgres
 In Postgres DB Admin: give password
 
 * Table Structure:
