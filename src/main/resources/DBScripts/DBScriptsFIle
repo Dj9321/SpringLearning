@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS public.created_in_db
+(
+    primary_key1 integer NOT NULL,
+    "Column1" character varying COLLATE pg_catalog."default",
+    "Column2" character varying pg_catalog."default",
+    CONSTRAINT created_in_db_pkey PRIMARY KEY (primary_key1)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.created_in_db
+    OWNER to postgres;
+    
+// creating a sequence
+CREATE SEQUENCE created_in_db_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+    
+    
+  

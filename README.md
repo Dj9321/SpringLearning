@@ -18,7 +18,7 @@ sudo docker start dj-postgres
 In Postgres DB Admin: give password
 
 * Table Structure:
-Table structure and DDL script will be in resource folder.
+Table structure and DDL script should be in resource folder.
 * Hostname: 172.17.0.2
 * Port: 5432
 * Username: postgres
