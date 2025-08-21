@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.Data;
@@ -23,10 +24,12 @@ public class CreatedInDB {
 	/**
 	 * @Id: tells this is the primary key column. Not composite however.
 	 *      GenerationTYpe.AUTO > the JPA provider will use any strategy it wants to
-	 *      generate the identifiers.
+	 *      generate the identifiers. Use @SequenceGenerator with allocationSize so
+	 *      that defaults will not be set like 50
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "created_in_db_seq")
+	@SequenceGenerator(name = "created_in_db_seq", sequenceName = "created_in_db_seq", allocationSize = 1)
 	Integer primary_key1;
 
 //	@Type(com.vladmihalcea.hibernate.type.array.StringArrayType.class)
