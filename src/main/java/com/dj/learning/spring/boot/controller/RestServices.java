@@ -78,6 +78,8 @@ public class RestServices {
 		ResponseEntity<RestTemplateExampleDto> r1 = restTemplate.exchange(url1, HttpMethod.POST, entity,
 				RestTemplateExampleDto.class);
 		System.out.println(r1);
+		System.out.println("Status Code: " + r1.getStatusCode());
+		System.out.println("Headers: " + r1.getHeaders());
 		return "See sysouts for more";
 	}
 }
