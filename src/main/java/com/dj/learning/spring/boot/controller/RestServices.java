@@ -1,6 +1,10 @@
 package com.dj.learning.spring.boot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +15,7 @@ import com.dj.learning.spring.boot.entity.CreatedInDB;
 import com.dj.learning.spring.boot.service.DataService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 @RestController
 public class RestServices {
@@ -44,17 +49,35 @@ public class RestServices {
 		String url = "https://jsonplaceholder.typicode.com/posts/2";
 		RestTemplateExampleDto r = restTemplate.getForObject(url, RestTemplateExampleDto.class);
 		System.out.println(r);
-		
+
 		System.out.println("===================== get For Entity =====================");
 		// 2. Using getForEntity() > gives status code, headers, body (ResponseEntity>
-		// If you keep String you get JSON, else you get the object directly (as getForObject)
-		ResponseEntity<String> response = restTemplate
-				.getForEntity("https://jsonplaceholder.typicode.com/posts/1", String.class);
+		// If you keep String you get JSON, else you get the object directly (as
+		// getForObject)
+		ResponseEntity<String> response = restTemplate.getForEntity("https://jsonplaceholder.typicode.com/posts/1",
+				String.class);
 		// Access response body, status, and headers
 		System.out.println("Body: " + response.getBody());
 		System.out.println("Status Code: " + response.getStatusCode());
 		System.out.println("Headers: " + response.getHeaders());
 		System.out.println();
+
+		// 3. Using exchange()
+		System.out.println("===================== Exchange() =====================");
+		Gson gson = new Gson();
+		String url1 = "https://jsonplaceholder.typicode.com/posts";
+		// a. HttpHeaders
+		HttpHeaders requestHeaders = new HttpHeaders();
+//		requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+//		requestHeaders.set("uid", "234132513251325132534");
+		String json = gson.toJson(response.getBody());
+
+		// b. HttpEntity
+		HttpEntity<String> entity = new HttpEntity<>(json, requestHeaders);
+		// c. exchange()
+		ResponseEntity<RestTemplateExampleDto> r1 = restTemplate.exchange(url1, HttpMethod.POST, entity,
+				RestTemplateExampleDto.class);
+		System.out.println(r1);
 		return "See sysouts for more";
 	}
 }
