@@ -15,14 +15,15 @@ public class DataService {
 	CreatedByDBRepo db;
 
 	@Transactional
-	public void saveDataInCreatedByDB() {
+	public CreatedInDB saveDataInCreatedByDB() {
 		CreatedInDB entity = new CreatedInDB();
 		// If you’re using auto-increment IDs, let the database generate them to avoid
 		// ID and version conflicts.
 //		entity.setPrimary_key1(3);
 		entity.setColumn1('H');
 		entity.setColumn2('D');
-		db.save(entity);
+		CreatedInDB savedEntity = db.save(entity);
+		return savedEntity;
 	}
 
 }

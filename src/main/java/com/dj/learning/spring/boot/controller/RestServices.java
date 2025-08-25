@@ -1,10 +1,16 @@
 package com.dj.learning.spring.boot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import com.dj.learning.spring.boot.dto.RestTemplateExampleDto;
+import com.dj.learning.spring.boot.entity.CreatedInDB;
 import com.dj.learning.spring.boot.service.DataService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 public class RestServices {
@@ -12,9 +18,43 @@ public class RestServices {
 	@Autowired
 	DataService dataService;
 
+	// Create here or create in @Configuration class as @Bean and autowire here
+//	private RestTemplate restTemplate = new RestTemplate();
+	@Autowired
+	private RestTemplate restTemplate;
+
 	@GetMapping("/check")
 	public String applicationCheck() {
 		dataService.saveDataInCreatedByDB();
 		return "Application is up and running";
+	}
+
+	@GetMapping("/jsonMapper")
+	public String jsonMapper() throws JsonProcessingException {
+		CreatedInDB entity = dataService.saveDataInCreatedByDB();
+		// writing entity object to JSON
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(entity);
+	}
+
+	@GetMapping("/callExternalWebsite")
+	public String restTemplateExample() {
+		System.out.println("===================== get For Object =====================");
+		// 1. Using getForObject() > Directly maps to object
+		String url = "https://jsonplaceholder.typicode.com/posts/2";
+		RestTemplateExampleDto r = restTemplate.getForObject(url, RestTemplateExampleDto.class);
+		System.out.println(r);
+		
+		System.out.println("===================== get For Entity =====================");
+		// 2. Using getForEntity() > gives status code, headers, body (ResponseEntity>
+		// If you keep String you get JSON, else you get the object directly (as getForObject)
+		ResponseEntity<String> response = restTemplate
+				.getForEntity("https://jsonplaceholder.typicode.com/posts/1", String.class);
+		// Access response body, status, and headers
+		System.out.println("Body: " + response.getBody());
+		System.out.println("Status Code: " + response.getStatusCode());
+		System.out.println("Headers: " + response.getHeaders());
+		System.out.println();
+		return "See sysouts for more";
 	}
 }
