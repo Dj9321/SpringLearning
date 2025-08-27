@@ -62,7 +62,7 @@ public class RestServices {
 		System.out.println("Headers: " + response.getHeaders());
 		System.out.println();
 
-		// 3. Using exchange()
+		// 3. Using exchange() > More advanced and specific
 		System.out.println("===================== Exchange() =====================");
 		Gson gson = new Gson();
 		String url1 = "https://jsonplaceholder.typicode.com/posts";

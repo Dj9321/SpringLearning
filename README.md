@@ -7,6 +7,9 @@ It connects with Postgres SQL.
  * Needs Postgres Server to start.
  * Just start the Postgres in Docker
  * Port changed to 9090 and has an index.html in static resources folder
+ * Enabled all actuator endpoints
+ * Added Dependency: Swagger
+ * Added Dependency: Gson
 
 #Security
 Check in applicaiton.properties file
