@@ -4,7 +4,7 @@ Markdown syntax (e.g., # Title for headers, - or * for lists, etc.
 # Description
 This project contains Spring boot project.
 It connects with Postgres SQL.
- * Needs Postgres Server to start.
+ * Needs Postgres Server to start. Doesn't start if DB is not started.
  * Just start the Postgres in Docker
  * Port changed to 9090 and has an index.html in static resources folder
  * Enabled all actuator endpoints
@@ -28,7 +28,7 @@ Table structure and DDL script should be in resource folder.
 
 # Swagger:
 Add openapi dependency and no configuration required for this. 
-Use url: http://localhost:8080/swagger-ui/index.html
+Use url: port changed to 9090) http://localhost:9090/swagger-ui/index.html
 
 
 # Author
