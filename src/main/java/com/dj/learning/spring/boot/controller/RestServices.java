@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.dj.learning.spring.boot.config.MailConfigFromProperties;
 import com.dj.learning.spring.boot.dto.RestTemplateExampleDto;
 import com.dj.learning.spring.boot.entity.CreatedInDB;
 import com.dj.learning.spring.boot.service.DataService;
@@ -22,6 +23,9 @@ public class RestServices {
 
 	@Autowired
 	DataService dataService;
+
+	@Autowired
+	MailConfigFromProperties mailConfig;
 
 	// Create here or create in @Configuration class as @Bean and autowire here
 //	private RestTemplate restTemplate = new RestTemplate();
@@ -81,5 +85,10 @@ public class RestServices {
 		System.out.println("Status Code: " + r1.getStatusCode());
 		System.out.println("Headers: " + r1.getHeaders());
 		return "See sysouts for more";
+	}
+
+	@GetMapping("/checkMailProperties")
+	public String getMailProperties() {
+		return mailConfig.getFrom() + " Host Name: " + mailConfig.getHostName() + " Port: " + mailConfig.getPort();
 	}
 }
