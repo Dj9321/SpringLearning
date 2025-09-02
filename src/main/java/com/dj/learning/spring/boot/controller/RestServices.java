@@ -100,14 +100,19 @@ public class RestServices {
 
 	/**
 	 * Check for /. Don't keep any slashes in between.
-	 * "/dheeraj?requestWord=siramdas > shouldn't call /dheeraj/ 
+	 * "/dheeraj?requestWord=siramdas > shouldn't call /dheeraj/ {} with comma in
+	 * between > accept both urls with and without the pathvariable
+	 * @PathVariable: doesn't have defaultValue like @RequestParam
 	 */
-	@GetMapping("/callAssertCheck/{word}")
-	public String callAssertCheck(@PathVariable("word") String checkString,
-			@RequestParam(required = false, name = "requestWord", defaultValue = "Dheeraj") String word1) {
-		// @RequestParam, @PathParam
+	@GetMapping({ "/callAssertCheck/", "/callAssertCheck/{word}" })
+	public String callAssertCheck(@PathVariable(name = "word", required = false) String checkString,
+			@RequestParam(required = false, name = "requestWord", defaultValue = "Default value is Dheeraj") String word1) {
+		// @RequestParam, @PathParam. If you just give callAssertCheck/ without path
+		// variable it doesn't work. If you give /abc/ > then you should call /abc/ OR
+		// if /abc > call /abc (without ending /)
 		System.out.println("Checking word in Request param " + word1);
-		return utilFunctions.assertNull(checkString);
+		String stringUtils = utilFunctions.springStringUtils("Spring dj");
+		return utilFunctions.springAssertFunctionality(checkString) + stringUtils;
 	}
 
 }
