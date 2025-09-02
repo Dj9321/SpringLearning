@@ -7,6 +7,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +16,7 @@ import com.dj.learning.spring.boot.config.MailConfigFromProperties;
 import com.dj.learning.spring.boot.dto.RestTemplateExampleDto;
 import com.dj.learning.spring.boot.entity.CreatedInDB;
 import com.dj.learning.spring.boot.service.DataService;
+import com.dj.learning.spring.boot.util.SpringCommonUtilFunctions;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -23,6 +26,9 @@ public class RestServices {
 
 	@Autowired
 	DataService dataService;
+
+	@Autowired
+	SpringCommonUtilFunctions utilFunctions;
 
 	@Autowired
 	MailConfigFromProperties mailConfig;
@@ -91,4 +97,17 @@ public class RestServices {
 	public String getMailProperties() {
 		return mailConfig.getFrom() + " Host Name: " + mailConfig.getHostName() + " Port: " + mailConfig.getPort();
 	}
+
+	/**
+	 * Check for /. Don't keep any slashes in between.
+	 * "/dheeraj?requestWord=siramdas > shouldn't call /dheeraj/ 
+	 */
+	@GetMapping("/callAssertCheck/{word}")
+	public String callAssertCheck(@PathVariable("word") String checkString,
+			@RequestParam(required = false, name = "requestWord", defaultValue = "Dheeraj") String word1) {
+		// @RequestParam, @PathParam
+		System.out.println("Checking word in Request param " + word1);
+		return utilFunctions.assertNull(checkString);
+	}
+
 }
