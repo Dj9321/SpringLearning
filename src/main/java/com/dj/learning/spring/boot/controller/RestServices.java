@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.dj.learning.spring.boot.config.MailConfigFromProperties;
 import com.dj.learning.spring.boot.dto.RestTemplateExampleDto;
-import com.dj.learning.spring.boot.entity.CreatedInDB;
+import com.dj.learning.spring.boot.entity.CheckTable;
 import com.dj.learning.spring.boot.service.DataService;
 import com.dj.learning.spring.boot.util.SpringCommonUtilFunctions;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,7 +46,7 @@ public class RestServices {
 
 	@GetMapping("/jsonMapper")
 	public String jsonMapper() throws JsonProcessingException {
-		CreatedInDB entity = dataService.saveDataInCreatedByDB();
+		CheckTable entity = dataService.saveDataInCreatedByDB();
 		// writing entity object to JSON
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(entity);

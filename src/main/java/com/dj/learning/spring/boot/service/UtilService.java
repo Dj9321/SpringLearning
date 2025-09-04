@@ -14,6 +14,7 @@ public class UtilService {
 	}
 
 	public void callAssertCheck(String check) {
-		util.assertNull(check);
+		util.springAssertFunctionality(check);
+		util.springStringUtils(check);
 	}
 }

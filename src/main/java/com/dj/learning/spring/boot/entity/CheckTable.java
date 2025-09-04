@@ -13,10 +13,11 @@ import jakarta.persistence.Version;
 import lombok.Data;
 
 // Entity name refers to the identifier used for a persistent domain object managed by JPA 
-@Entity(name = "created_in_db")
-@Table(name = "created_in_db", schema = "public")
+//@Entity(name = "created_in_db")
+@Entity
+//@Table(name = "created_in_db", schema = "public")
 @Data
-public class CreatedInDB {
+public class CheckTable {
 
 //	@Version
 //	private Long version;
