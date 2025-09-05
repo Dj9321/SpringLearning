@@ -30,6 +30,11 @@ Table structure and DDL script should be in resource folder.
 Add openapi dependency and no configuration required for this. 
 Use url: port changed to 9090) http://localhost:9090/swagger-ui/index.html
 
+# To add: 
+* Spring security > further additions
+* Spring Session > using different methods
+* Spring Cache
+* Spring Eureka
 
 # Author
 Dheeraj S
