@@ -28,3 +28,36 @@ SELECT * FROM public.created_in_db ORDER BY primary_key1 ASC
 
 -- Sequence has last_value, log_cnt, is_called
 select * from created_in_db_seq;
+
+
+-- For EUREKA 
+
+DROP TABLE IF EXISTS public.student;
+CREATE TABLE IF NOT EXISTS public.student
+(
+    id integer NOT NULL,
+    "first_name" character varying COLLATE pg_catalog."default",
+    "last_name" character varying,
+	"email" character varying ,
+	"address_id" integer ,
+	CONSTRAINT student1 PRIMARY KEY (id)
+)
+-- All user-related objects, including tables, indexes, and materialized views, will be located in pg_default if no other tablespace is specified
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.student
+    OWNER to postgres;
+    
+	
+	CREATE TABLE IF NOT EXISTS public.address
+(
+    id integer NOT NULL,
+    "street" character varying ,
+    "city" character varying ,
+    CONSTRAINT address1 PRIMARY KEY (id)
+)
+-- All user-related objects, including tables, indexes, and materialized views, will be located in pg_default if no other tablespace is specified
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.address
+    OWNER to postgres;

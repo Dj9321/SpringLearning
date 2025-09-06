@@ -19,12 +19,14 @@ Check in applicaiton.properties file
 In terminal: sudo docker ps -a // Check all containers
 sudo docker start dj-postgres
 In Postgres DB Admin: give password
+Created a table-mappings.properties to move table mapping to external file
 
 * Table Structure:
 Table structure and DDL script should be in resource folder.
 * Hostname: 172.17.0.2
 * Port: 5432
 * Username: postgres
+* We used a class that implements PhysicalNamingStrategy to get table names from property files. We can still use @Table to override things.
 
 # Swagger:
 Add openapi dependency and no configuration required for this. 
