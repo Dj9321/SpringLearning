@@ -6,10 +6,13 @@ This project contains Spring boot project.
 It connects with Postgres SQL.
  * Needs Postgres Server to start. Doesn't start if DB is not started.
  * Just start the Postgres in Docker
- * Port changed to 9090 and has an index.html in static resources folder
+ * Port changed to 9090 and has an index.html in static resources folder: http://localhost:9090
  * Enabled all actuator endpoints
  * Added Dependency: Swagger
  * Added Dependency: Gson
+
+# To Do
+* Update dependency versions. Spring boot starter parent. Currently 3.5.5
 
 #Security
 Check in applicaiton.properties file

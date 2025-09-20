@@ -49,6 +49,7 @@ public class RestServices {
 		CheckTable entity = dataService.saveDataInCreatedByDB();
 		// writing entity object to JSON
 		ObjectMapper mapper = new ObjectMapper();
+//		 mapper.readValue(src), classType);
 		return mapper.writeValueAsString(entity);
 	}
 
