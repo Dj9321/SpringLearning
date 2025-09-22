@@ -35,8 +35,9 @@ public class SecurityConfigurationDj {
 	@Bean
 //	@Order(SecurityProperties.BASIC_AUTH_ORDER)
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((requests) -> requests.requestMatchers("/check", "/error").permitAll()
-				.requestMatchers("/callExternalWebsite", "/jsonMapper").authenticated());
+		http.csrf(csrfConfig -> csrfConfig.disable())
+				.authorizeHttpRequests((requests) -> requests.requestMatchers("/check", "/error", "/register")
+						.permitAll().requestMatchers("/callExternalWebsite", "/jsonMapper").authenticated());
 		http.formLogin(withDefaults());
 //		http.formLogin(flc -> flc.disable());
 //		http.httpBasic(withDefaults());
@@ -64,6 +65,7 @@ public class SecurityConfigurationDj {
 	 * return new JdbcUserDetailsManager(datasource); }
 	 */
 
+	// By default bcrypt will be used
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
