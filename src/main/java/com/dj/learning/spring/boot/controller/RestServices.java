@@ -1,5 +1,7 @@
 package com.dj.learning.spring.boot.controller;
 
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

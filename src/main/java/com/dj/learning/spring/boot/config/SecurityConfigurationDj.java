@@ -1,18 +1,71 @@
-//package com.dj.learning.spring.boot.config;
-//
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
-//
-//@Configuration
-//@EnableWebSecurity
-//public class SecurityConfigurationDj extends WebSecurityConfiguration {
-//
+package com.dj.learning.spring.boot.config;
+
+import static org.springframework.security.config.Customizer.withDefaults;
+
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.password.CompromisedPasswordChecker;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfigurationDj {
+
 //	protected void configure(HttpSecurity http) throws Exception {
 //		http.authorizeRequests().antMatchers("/oauth2/**", "/login/**", "/logout/**").permitAll().anyRequest()
 //				.authenticated().and().oauth2Login().loginPage("/login").defaultSuccessURL("/home").and().logout()
 //				.logoutSuccessUrl("/").logoutUrl("/logout").and().csrf().disable();
 //	}
-//
-//}
+
+	@Bean
+//	@Order(SecurityProperties.BASIC_AUTH_ORDER)
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests((requests) -> requests.requestMatchers("/check", "/error").permitAll()
+				.requestMatchers("/callExternalWebsite", "/jsonMapper").authenticated());
+		http.formLogin(withDefaults());
+//		http.formLogin(flc -> flc.disable());
+//		http.httpBasic(withDefaults());
+		http.httpBasic(hbc -> hbc.disable());
+		return http.build();
+	}
+
+	/**
+	 * We created a bean of UserDetailsService > an implementation is
+	 * InMemoryUserDetailsManager
+	 */
+	@Bean
+	public UserDetailsService userDetailsService() {
+		UserDetails read = User.withUsername("user")
+				.password("{bcrypt}$2a$12$G//l9hoEFmUKMrE4BTy77.ObFJDIsS8HY7nYRAMTXRzU87062etMS").authorities("read")
+				.build();
+		UserDetails admin = User.withUsername("admin").password("{noop}Beach@dj1").authorities("admin").build();
+		return new InMemoryUserDetailsManager(read, admin);
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+
+	@Bean
+	public CompromisedPasswordChecker compromisedPasswordChecker() {
+		// It will ask a public api to check your password against common passwords
+		// You can also implement your own implementation as well.
+		// Will prevent to login if your password is not complex like simple words :
+		// Sand
+		return new HaveIBeenPwnedRestApiPasswordChecker();
+
+	}
+}
