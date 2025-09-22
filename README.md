@@ -10,12 +10,17 @@ It connects with Postgres SQL.
  * Enabled all actuator endpoints
  * Added Dependency: Swagger
  * Added Dependency: Gson
+ * 
 
 # To Do
 * Update dependency versions. Spring boot starter parent. Currently 3.5.5
 
 #Security
-Check in applicaiton.properties file
+* Check in applicaiton.properties file
+* For DB custom table: check customer table for username & Password
+* for default table check user table
+
+
 
 # Postgres SQL
 * Start Via Docker: 

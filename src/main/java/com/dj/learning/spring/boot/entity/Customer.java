@@ -18,6 +18,7 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	// Identity means DB will take care of creating id 
 	private long id;
+	// here email is the username
 	private String email;
 	private String pwd;
 	@Column(name = "role")

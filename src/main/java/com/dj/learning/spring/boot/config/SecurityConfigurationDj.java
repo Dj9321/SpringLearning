@@ -23,7 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity // this is also not mandatory as spring will detect based on dependencies
 public class SecurityConfigurationDj {
 
 //	protected void configure(HttpSecurity http) throws Exception {
@@ -59,10 +59,10 @@ public class SecurityConfigurationDj {
 //	}
 
 	// javax.sql.Datasource. Getting userDetails from Database
-	@Bean
-	public UserDetailsService userDetailsService(DataSource datasource) {
-		return new JdbcUserDetailsManager(datasource);
-	}
+	/*
+	 * @Bean public UserDetailsService userDetailsService(DataSource datasource) {
+	 * return new JdbcUserDetailsManager(datasource); }
+	 */
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
