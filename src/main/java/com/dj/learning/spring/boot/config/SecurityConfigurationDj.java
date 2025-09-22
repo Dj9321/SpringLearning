@@ -2,6 +2,8 @@ package com.dj.learning.spring.boot.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import javax.sql.DataSource;
+
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
 
@@ -45,13 +48,20 @@ public class SecurityConfigurationDj {
 	 * We created a bean of UserDetailsService > an implementation is
 	 * InMemoryUserDetailsManager
 	 */
+//	@Bean
+//	public UserDetailsService userDetailsService() {
+//		// Sand@dj22
+//		UserDetails read = User.withUsername("user")
+//				.password("Sand@345").authorities("read")
+//				.build();
+//		UserDetails admin = User.withUsername("admin").password("{bcrypt}$2a$12$af8x3jc.amnpMDDZwwwyOe3uFSBMBF8y1vtrw34/41BIocXfR0AHK").authorities("admin").build();
+//		return new InMemoryUserDetailsManager(read, admin);
+//	}
+
+	// javax.sql.Datasource. Getting userDetails from Database
 	@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails read = User.withUsername("user")
-				.password("{bcrypt}$2a$12$G//l9hoEFmUKMrE4BTy77.ObFJDIsS8HY7nYRAMTXRzU87062etMS").authorities("read")
-				.build();
-		UserDetails admin = User.withUsername("admin").password("{noop}Beach@dj1").authorities("admin").build();
-		return new InMemoryUserDetailsManager(read, admin);
+	public UserDetailsService userDetailsService(DataSource datasource) {
+		return new JdbcUserDetailsManager(datasource);
 	}
 
 	@Bean

@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS public.student
 )
 -- All user-related objects, including tables, indexes, and materialized views, will be located in pg_default if no other tablespace is specified
 TABLESPACE pg_default;
-
+created_in_db_seqcreated_in_db_seqcreated_in_db_seqcreated_in_db_seq
 ALTER TABLE IF EXISTS public.student
     OWNER to postgres;
     
@@ -60,4 +60,35 @@ ALTER TABLE IF EXISTS public.student
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.address
+
     OWNER to postgres;
+    
+    -- For spring security
+create table users(username varchar(50) not null primary key,password varchar(500) not null,enabled boolean not null);
+create table authorities (username varchar(50) not null,authority varchar(50) not null,constraint fk_authorities_users foreign key(username) references users(username));
+create unique index ix_auth_username on authorities (username,authority);
+
+
+Insert into users values ('user', '{noop}Sand@345', '1');
+Insert into authorities values('user', 'read');
+
+Insert into users values ('admin', '{bcrypt}$2a$12$af8x3jc.amnpMDDZwwwyOe3uFSBMBF8y1vtrw34/41BIocXfR0AHK', '1');
+Insert into authorities values('admin', 'admin');
+
+select * from users;
+select * from authorities;
+
+-- Creating a custom user table: GENERATED ALWAYS AS IDENTITY in postgres > similar to AUTO_INCREMENT
+CREATE TABLE customer (
+  id int NOT NULL GENERATED ALWAYS AS IDENTITY,
+  email varchar(45) NOT NULL,
+  pwd varchar(200) NOT NULL,
+  role varchar(45) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+select * from customer;
+
+INSERT  INTO customer (email, pwd, role) VALUES ('dheeraj@example.com', '{noop}Sand@345', 'read');
+INSERT  INTO customer (email, pwd, role) VALUES ('admin@example.com', '{bcrypt}$2a$12$af8x3jc.amnpMDDZwwwyOe3uFSBMBF8y1vtrw34/41BIocXfR0AHK', 'admin');
+
