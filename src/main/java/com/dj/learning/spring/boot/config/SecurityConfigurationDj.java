@@ -68,6 +68,8 @@ public class SecurityConfigurationDj {
 	// By default bcrypt will be used
 	@Bean
 	public PasswordEncoder passwordEncoder() {
+		// leave to spring to choose the password encoder > bcrypt default for now in
+		// spring
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
