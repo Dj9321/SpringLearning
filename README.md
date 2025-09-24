@@ -10,16 +10,16 @@ It connects with Postgres SQL.
  * Enabled all actuator endpoints
  * Added Dependency: Swagger
  * Added Dependency: Gson
- * 
+ * For different application.properties > Try to keep properties in sync
 
 # To Do
 * Update dependency versions. Spring boot starter parent. Currently 3.5.5
 
 #Security
 * Check in applicaiton.properties file
-* For DB custom table: check customer table for username & Password
+* For DB custom table: check customer table for username & Password 
+* If you forgot pwd, just add one more user in customer table.
 * for default table check user table
-
 
 
 # Postgres SQL
