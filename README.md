@@ -11,6 +11,9 @@ It connects with Postgres SQL.
  * Added Dependency: Swagger
  * Added Dependency: Gson
  * For different application.properties > Try to keep properties in sync
+ * Profile has been kept in environmental variables SPRING_PROFILES_ACTIVE = default. You can change the profile there. Activated configuration classes for particular environment.
+ * For testing and dev, the password will not be checked > so it accepts anything
+ * Default profile is set in application.properties file.
 
 # To Do
 * Update dependency versions. Spring boot starter parent. Currently 3.5.5

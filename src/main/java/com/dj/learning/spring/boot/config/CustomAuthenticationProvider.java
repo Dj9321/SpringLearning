@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 // Tells spring we have our own AuthenticationProvider
 @Component
 @RequiredArgsConstructor
-@Profile("prod") // when it is not Production 
+@Profile({"prod", "default"}) // when it is not Production 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	// we have a custom implementation of UserDetails service:

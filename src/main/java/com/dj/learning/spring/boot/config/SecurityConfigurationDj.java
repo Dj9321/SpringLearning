@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.password.CompromisedPasswordChecker;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
@@ -35,13 +36,15 @@ public class SecurityConfigurationDj {
 	@Bean
 //	@Order(SecurityProperties.BASIC_AUTH_ORDER)
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+// .redirectToHttps(Customizer.withDefaults()) > use this in Prod for https only 
 		http.csrf(csrfConfig -> csrfConfig.disable())
 				.authorizeHttpRequests((requests) -> requests.requestMatchers("/check", "/error", "/register")
 						.permitAll().requestMatchers("/callExternalWebsite", "/jsonMapper").authenticated());
 		http.formLogin(withDefaults());
 //		http.formLogin(flc -> flc.disable());
 //		http.httpBasic(withDefaults());
-		http.httpBasic(hbc -> hbc.disable());
+//		http.httpBasic(hbc -> hbc.disable());
+		http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
 		return http.build();
 	}
 

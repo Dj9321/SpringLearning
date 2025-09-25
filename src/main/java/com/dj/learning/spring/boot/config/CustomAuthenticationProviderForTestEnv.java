@@ -17,7 +17,8 @@ import lombok.RequiredArgsConstructor;
 // Tells spring we have our own AuthenticationProvider
 @Component
 @RequiredArgsConstructor
-@Profile("!prod") // when it is not Production 
+@Profile({ "dev", "test" }) 
+//@Profile("!prod") // when it is not Production
 public class CustomAuthenticationProviderForTestEnv implements AuthenticationProvider {
 
 	// we have a custom implementation of UserDetails service:
@@ -33,11 +34,11 @@ public class CustomAuthenticationProviderForTestEnv implements AuthenticationPro
 		String username = authentication.getName();
 		String pwd = authentication.getCredentials().toString(); // getCredentials gives Object hence toString()
 		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-		
+
 		// We don't need password check in Testing environment (for a usecase)
 //		if (passwordEncoder.matches(pwd, userDetails.getPassword())) {
 //			// write additional logic like age > 18 or other custom logic
-			return new UsernamePasswordAuthenticationToken(username, pwd, userDetails.getAuthorities());
+		return new UsernamePasswordAuthenticationToken(username, pwd, userDetails.getAuthorities());
 //		} else {
 //			// BadCredentialsException is subclass of AuthenticationException
 //			throw new BadCredentialsException("Invalid password");
