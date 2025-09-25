@@ -1,6 +1,7 @@
 package com.dj.learning.spring.boot.config;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -20,7 +21,23 @@ public class CustomBasicAuthenticationEntryPoint implements AuthenticationEntryP
 		// AuthenticationEntryPoint > or write your own custom logic or any condition
 //		response.setHeader("WWW-Authenticate", "Basic realm=");
 		response.setHeader("Dj-Spring-error-Header", "Authentication Failed for the Dj Spring app");
-		response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
+		// instead of sendError we have to write sendStatus if we want our own json
+//		response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
+		// all below code is for customized exception content (body)
+		response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+		LocalDateTime currentTimeStamp = LocalDateTime.now();
+		String message = (authException != null && authException.getMessage() != null) ? authException.getMessage()
+				: "Unauthorized message for Dj Spring app";
+		String path = request.getRequestURI();
+
+		response.setContentType("application/json:charset=UTF-8");
+
+		String jsonResponse = String.format(
+				"{\"timestamp\": \"%s\",\"status\":%d, \"error\":\"%s\",\"message\":\"%s\", \"path\": \"%s\"}",
+				currentTimeStamp, HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase(), message,
+				path);
+		response.getWriter().write(jsonResponse);
 
 	}
 
