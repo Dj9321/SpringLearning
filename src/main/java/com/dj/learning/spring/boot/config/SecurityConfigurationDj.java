@@ -40,11 +40,23 @@ public class SecurityConfigurationDj {
 		http.csrf(csrfConfig -> csrfConfig.disable())
 				.authorizeHttpRequests((requests) -> requests.requestMatchers("/check", "/error", "/register")
 						.permitAll().requestMatchers("/callExternalWebsite", "/jsonMapper").authenticated());
+		// we can configure for login page as well by below line http.formLogin()
 		http.formLogin(withDefaults());
 //		http.formLogin(flc -> flc.disable());
 //		http.httpBasic(withDefaults());
 //		http.httpBasic(hbc -> hbc.disable());
+		// Session Timeout url page
+		http.sessionManagement(smc -> smc.invalidSessionUrl("/invalidSession")); // if we have MVC
+		// .expiredUrl() > for expired urls in MVC
+		http.sessionManagement(s -> s.maximumSessions(2).maxSessionsPreventsLogin(true));
 		http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
+		// This is a Global config whenever an exception occurs this will be called.
+		// This is global as it will be called for all other flows not just with login
+		// page.
+//		http.exceptionHandling(eh -> eh.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
+		// we can also add accessDeniedPage("/customErrorPage") to this to redirect to
+		// the error page
+		http.exceptionHandling(eh -> eh.accessDeniedHandler(new CustomAccessDeniedHandler()));
 		return http.build();
 	}
 

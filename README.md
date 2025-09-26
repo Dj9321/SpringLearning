@@ -23,6 +23,13 @@ It connects with Postgres SQL.
 * For DB custom table: check customer table for username & Password 
 * If you forgot pwd, just add one more user in customer table.
 * for default table check user table
+* Custom UserDetails Service: UserServiceWithCustomTable
+* Filters, PasswordEncoder, CompromisedPasswordChecker : SecurityConfigurationDj
+* Handling our custom AuthenticationProviders: CustomAuthenticationProviderForTestEnv & CustomAuthenticationProvider (default profile)
+* Handling our custom exceptions > 401 and 403 > Files: CustomBasicAuthenticationEntryPoint (401) & CustomAccessDeniedHandler (403)
+* Session timeouts: server.servlet.session.timeout=${SESSION_TIMEOUT:20m} (m: minutes)
+* Authentication events: Check in events package: AuthenticationEvents class
+
 
 
 # Postgres SQL
