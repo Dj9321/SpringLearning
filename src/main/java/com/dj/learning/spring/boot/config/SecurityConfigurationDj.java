@@ -38,6 +38,7 @@ public class SecurityConfigurationDj {
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 // .redirectToHttps(Customizer.withDefaults()) > use this in Prod for https only 
 		http.csrf(csrfConfig -> csrfConfig.disable())
+				// /abcUrl/** > after this url whatever comes we will permit > 2 Stars **
 				.authorizeHttpRequests((requests) -> requests.requestMatchers("/check", "/error", "/register")
 						.permitAll().requestMatchers("/callExternalWebsite", "/jsonMapper").authenticated());
 		// we can configure for login page as well by below line http.formLogin()
@@ -97,4 +98,12 @@ public class SecurityConfigurationDj {
 		return new HaveIBeenPwnedRestApiPasswordChecker();
 
 	}
+
+	// if we want to change security context strategy: default is: MODE_THREAD_LOCAL
+	// Others: MODE_INHERITABLE_THREAD_LOCAL, MODE_GLOBAL
+//	@Bean
+//	public InitializingBean initializingBean() {
+//	    return () -> SecurityContextHolder().setStrategyName(SecurityContextHodler.MODE_INHERITABLE_THREAD_LOCAL);
+//	}
+
 }

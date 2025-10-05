@@ -28,7 +28,8 @@ It connects with Postgres SQL.
 * Handling our custom AuthenticationProviders: CustomAuthenticationProviderForTestEnv & CustomAuthenticationProvider (default profile)
 * Handling our custom exceptions > 401 and 403 > Files: CustomBasicAuthenticationEntryPoint (401) & CustomAccessDeniedHandler (403)
 * Session timeouts: server.servlet.session.timeout=${SESSION_TIMEOUT:20m} (m: minutes)
-* Authentication events: Check in events package: AuthenticationEvents class
+* Authentication events: Check in events package: AuthenticationEvents class > AuthenticationSuccessEvent or AbstractAuthenticationFailureEvent
+
 
 
 

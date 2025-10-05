@@ -1,11 +1,13 @@
 package com.dj.learning.spring.boot.config;
 
+import org.springframework.boot.actuate.endpoint.SecurityContext;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +32,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	// We created one provider, default has a for loop
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+//		we can get user name with this argument of Authentication.
+		// We can also get it from SecurityContextHolder.getContext().getAuthentication()
+		// Because spring keeps in Thred local we can get it from anywhere (or any thread)
+		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+		authentication1.getName();
 		String username = authentication.getName();
 		String pwd = authentication.getCredentials().toString(); // getCredentials gives Object hence toString()
 		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
