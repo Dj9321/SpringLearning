@@ -13,11 +13,15 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -58,8 +62,28 @@ public class SecurityConfigurationDj {
 		// we can also add accessDeniedPage("/customErrorPage") to this to redirect to
 		// the error page
 		http.exceptionHandling(eh -> eh.accessDeniedHandler(new CustomAccessDeniedHandler()));
+		http.oauth2Login(Customizer.withDefaults()); // enable OAuth2 login
 		return http.build();
 	}
+
+	@Bean
+	ClientRegistrationRepository clientRegistrationRepository() {
+		ClientRegistration github = githubClientRegistration();
+//		ClientRegistration facebook = facebookClientRegistration();
+		return new InMemoryClientRegistrationRepository(github); // , facebook);
+		// give clue to OAuth2 which Auth Server we are using.
+	}
+
+	// once we register we will get clientId & client secret with github or others.
+	// for gitHub go to > profile > settings > Developer options > OAuth Apps >
+	private ClientRegistration githubClientRegistration() {
+		return CommonOAuth2Provider.GITHUB.getBuilder("github").clientId("Ov23liVplacGriBNwZFB")
+				.clientSecret("93aaacbb205741dd26fe8378470955f529872b7a").build();
+	}
+
+//	private ClientRegistration facebookClientRegistration(){	
+//	    CommonOAuth2Provider.FACEBOOK.getBuilder("facebook").clientId().clientSecret()
+//	}
 
 	/**
 	 * We created a bean of UserDetailsService > an implementation is

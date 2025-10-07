@@ -35,8 +35,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 //		we can get user name with this argument of Authentication.
 		// We can also get it from SecurityContextHolder.getContext().getAuthentication()
 		// Because spring keeps in Thred local we can get it from anywhere (or any thread)
-		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
-		authentication1.getName();
+	
+//		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+//		authentication1.getName();
 		String username = authentication.getName();
 		String pwd = authentication.getCredentials().toString(); // getCredentials gives Object hence toString()
 		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
