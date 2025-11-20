@@ -18,6 +18,7 @@ import com.dj.learning.spring.boot.config.MailConfigFromProperties;
 import com.dj.learning.spring.boot.dto.RestTemplateExampleDto;
 import com.dj.learning.spring.boot.entity.CheckTable;
 import com.dj.learning.spring.boot.service.DataService;
+import com.dj.learning.spring.boot.service.EnvironmentTemp;
 import com.dj.learning.spring.boot.util.SpringCommonUtilFunctions;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,6 +49,7 @@ public class RestServices {
 
 	@GetMapping("/jsonMapper")
 	public String jsonMapper() throws JsonProcessingException {
+		System.out.println(envTemp.getEnvironment());
 		CheckTable entity = dataService.saveDataInCreatedByDB();
 		// writing entity object to JSON
 		ObjectMapper mapper = new ObjectMapper();
@@ -96,6 +98,9 @@ public class RestServices {
 		return "See sysouts for more";
 	}
 
+	@Autowired
+	EnvironmentTemp envTemp;
+	
 	@GetMapping("/checkMailProperties")
 	public String getMailProperties() {
 		return mailConfig.getFrom() + " Host Name: " + mailConfig.getHostName() + " Port: " + mailConfig.getPort();
