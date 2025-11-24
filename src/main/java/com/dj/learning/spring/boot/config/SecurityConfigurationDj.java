@@ -44,7 +44,9 @@ public class SecurityConfigurationDj {
 		http.csrf(csrfConfig -> csrfConfig.disable())
 				// /abcUrl/** > after this url whatever comes we will permit > 2 Stars **
 				.authorizeHttpRequests((requests) -> requests.requestMatchers("/check", "/error", "/register")
-						.permitAll().requestMatchers("/callExternalWebsite", "/jsonMapper").authenticated());
+						.permitAll().requestMatchers("/callExternalWebsite", "/jsonMapper", "/checkMailProperties")
+						// .hasAnyRole("read", "user", "OAUTH2_USER").anyRequest()
+						.authenticated());
 		// we can configure for login page as well by below line http.formLogin()
 		http.formLogin(withDefaults());
 //		http.formLogin(flc -> flc.disable());

@@ -26,7 +26,7 @@ public class UserServiceWithCustomTable implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Customer customer = customerRepo.findByEmail(username)
-				.orElseThrow(() -> new UsernameNotFoundException("User not for username: " + username));
+				.orElseThrow(() -> new UsernameNotFoundException("** by Dj **User not found for username: " + username));
 		List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(customer.getRole()));
 		return new User(customer.getEmail(), customer.getPwd(), authorities);
 	}
